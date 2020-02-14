@@ -44,4 +44,29 @@ router.get("/:id/actions", validateProjectId, (req, res) => {
     });
 });
 
+router.post("/", validateProject, (req, res) => {
+  const projData = req.body;
+
+  Proj.insert(projData)
+    .then(newProject => {
+      res.status(201).json(newProject);
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: err.message });
+    });
+});
+
+router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
+  const project_id = req.params.id;
+  const actData = { ...req.body, project_id };
+
+  Act.insert(actData)
+    .then(newAction => {
+      res.status(201).json(newAction);
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: err.message });
+    });
+});
+
 module.exports = router;
