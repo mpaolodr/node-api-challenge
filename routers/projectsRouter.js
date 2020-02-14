@@ -69,4 +69,35 @@ router.post("/:id/actions", validateProjectId, validateAction, (req, res) => {
     });
 });
 
+router.delete("/:id", validateProjectId, (req, res) => {
+  const { id } = req.params;
+
+  Proj.get(id)
+    .then(toBeDeleted => {
+      Proj.remove(toBeDeleted.id)
+        .then(success => {
+          res.status(200).json(toBeDeleted);
+        })
+        .catch(err => {
+          res.status(500).json({ errorMessage: err.message });
+        });
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: err.message });
+    });
+});
+
+router.put("/:id", validateProjectId, validateProject, (req, res) => {
+  const { id } = req.params;
+  const updatedProj = req.body;
+
+  Proj.update(id, updatedProj)
+    .then(updated => {
+      res.status(200).json(updated);
+    })
+    .catch(err => {
+      res.status(500).json({ errorMessage: err.message });
+    });
+});
+
 module.exports = router;
