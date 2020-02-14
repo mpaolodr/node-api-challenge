@@ -16,10 +16,11 @@ function validateProjectId(req, res, next) {
 
   Proj.get(id)
     .then(proj => {
+      // if proj is not null
       if (proj) {
         next();
       } else {
-        res.status(404).json({ errorMessage: "Invalid Id" });
+        res.status(404).json({ errorMessage: "Project does not exist" });
       }
     })
     .catch(err => {

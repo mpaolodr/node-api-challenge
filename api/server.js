@@ -3,6 +3,7 @@ const express = require("express");
 
 // routers
 const projRouter = require("../routers/projectsRouter.js");
+const actRouter = require("../routers/actionsRouter.js");
 
 const server = express();
 
@@ -11,6 +12,7 @@ server.use(express.json());
 
 // ROUTERS
 server.use("/api/projects", projRouter);
+server.use("/api/actions", actRouter);
 
 server.get("/", (req, res) => {
   res.status(200).json({ api: "is live" });
