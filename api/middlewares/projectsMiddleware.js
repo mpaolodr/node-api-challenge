@@ -1,6 +1,5 @@
 // IMPORTS
 const Proj = require("../../data/helpers/projectModel.js");
-const Act = require("../../data/helpers/actionModel.js");
 
 function validateProject(req, res, next) {
   const projData = req.body;
@@ -16,8 +15,12 @@ function validateProjectId(req, res, next) {
   const { id } = req.params;
 
   Proj.get(id)
-    .then(success => {
-      next();
+    .then(proj => {
+      if (proj) {
+        next();
+      } else {
+        res.status(404).json({ errorMessage: "Invalid Id" });
+      }
     })
     .catch(err => {
       res.status(404).json({ errorMessage: "Invalid Id" });
