@@ -1,5 +1,6 @@
 // IMPORTS
 const express = require("express");
+const cors = require("cors");
 
 // routers
 const projRouter = require("../routers/projectsRouter.js");
@@ -9,6 +10,9 @@ const server = express();
 
 // BUILT-IN MIDDLEWARE
 server.use(express.json());
+
+// THIRD_PARTY MIDDLEWARE
+server.use(cors());
 
 // ROUTERS
 server.use("/api/projects", projRouter);
